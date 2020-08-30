@@ -2,97 +2,22 @@
 const generateBtn = document.querySelector("#generate");
 
 // Array of special characters
-const specialCharactersArray = [
-  '@',
-  '%',
-  '+',
-  '\\',
-  '/',
-  "'",
-  '!',
-  '#',
-  '$',
-  '^',
-  '?',
-  ':',
-  ',',
-  ')',
-  '(',
-  '}',
-  '{',
-  ']',
-  '[',
-  '~',
-  '-',
-  '_',
-  '.'
+const specialCharactersArray = [ 
+  '@', '%', '+', '\\', '/', "'", '!', '#', '$', '^', '?', ':', ',', ')', '(', '}', '{', ']', '[', '~', '-', '_', '.'
 ];
 
 // Array of numeric characters
 const numericCharactersArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 // Array of lowercase characters
-const lowerCaseCharactersArray = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z'
+const lowerCharactersArray = [
+  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 ];
 
 // Array of uppercase characters 
-const upperCaseCharactersArray = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z'
+const upperCharactersArray = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
-
-//Empty array to represent configuration of above arrays
-const passwordConfigArrayPH = [];
 
 //Create variables to track checkbox status
 const lowerCharactersCheck = document.querySelector('#lowerCharacters');
@@ -100,59 +25,60 @@ const upperCharactersCheck = document.querySelector('#upperCharacters');
 const numericCharactersCheck = document.querySelector('#numericCharacters');
 const specialCharactersCheck = document.querySelector('#specialCharacters');
 
-//Create variables to track password length slider (and display value in HTML)
+//Create variables and event to track password length slider
 const range = document.getElementById("passwordLength");
 const lengthOutput = document.getElementById("lengthValue");
-lengthOutput.innerHTML = range.value; 
 
-range.oninput = function () {
-  lengthOutput.innerHTML = this.value;
-  passwordConfig.passwordLength = this.value;
-};
+range.querySelector("input").addEventListener("input", event => {
+  lengthOutput.setAttribute("data-length", event.target.value);
+});
+
+// Generating the password based on checkbox conditions
+function generatePassword() {
+  let passwordConfigArray = passwordConfiguration ();
+  let ranVar = '';
+  for (let i = 0; i < lengthOutput.getAttribute("data-length"); i++) {
+    ranVar = ranVar + passwordConfigArray[Math.floor(Math.random() * passwordConfigArray.length)]
+  }
+}
+
+// Creating the pool of eligible characters from the checkbox conditions
+function passwordConfiguration () {
+  let passwordConfigArray = [];
+    if(lowerCharactersCheck.checked){
+        passwordConfigArray.push.apply(passwordConfigArray, lowerCharactersArray);
+      }
+    if(upperCharactersCheck.checked){
+      passwordConfigArray.push.apply(passwordConfigArray, upperCharactersArray);
+    }
+    if(numericCharactersCheck.checked){
+    passwordConfigArray.push.apply(passwordConfigArray, numericCharactersArray);
+    }
+    if(specialCharactersCheck.checked){
+    passwordConfigArray.push.apply(passwordConfigArray, specialCharactersArray);
+    }
+  return passwordConfigArray;
+  };
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+  const password = generatePassword();
+  const passwordText = document.querySelector("#password");
 
   passwordText.value = password;
 
 }
 
-function generatePassword () {
-
-
-}
-
-function passwordConfiguration () {
-  lowerCharactersCheck.addEventListener('change', function(e){
-    if(lowerCharactersCheck.checked){
-      const passwordConfigArray = passwordConfigArrayPH.concat(lowerCaseCharactersArray);
-    }
-  })
-  upperCharactersCheck.addEventListener('change', function(e){
-    if(upperCharactersCheck.checked){
-      Array.prototype.push.apply('passwordConfigArray', 'upperCaseCharactersArray');
-    }
-  })
-  numericCharactersCheck.addEventListener('change', function(e){
-    if(numericCharactersCheck.checked){
-      Array.prototype.push.apply('passwordConfigArray', 'numericCharactersArray');
-    }
-  })
-  specialCharactersCheck.addEventListener('change', function(e){
-    if(specialCharactersCheck.checked){
-      Array.prototype.push.apply('passwordConfigArray', 'specialCharactersArray');
-    }
-  })
-};
-
-passwordConfiguration();
-
-console.log(passwordConfigArray);
-
-console.log(lowerCharactersCheck);
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
+// Disable Generate Password button if no options checked
+document.querySelectorAll('.options input').forEach(item => {
+  item.addEventListener('click', event => {
+    if (lowerCharactersCheck.checked || upperCharactersCheck.checked || numericCharactersCheck.checked || specialCharactersCheck.checked) {
+      generateBtn.disabled = false;
+    } else {
+      generateBtn.disabled = true;
+    }
+  })
+})

@@ -36,9 +36,25 @@
             <h3>Configuration</h3>
 
             <div>
-              <div>
-                <label for="passwordLength">Password length: <strong><span id="lengthValue"></span></strong></label>
-                <input type="range" min="8" max="128" value="8" class="length-selector" id="passwordLength">
+
+              <div class="passwordLength">
+
+                <div class="lengthValue" data-length="16">
+                  Password Length:
+                </div>
+
+                <div>
+                  <span>8</span>
+                  <input
+                    class="range-slider__range"
+                    type="range"
+                    value="16"
+                    min="8"
+                    max="128"
+                  />
+                  <span>128</span>
+                </div>
+
               </div>
 
               <div>
@@ -69,15 +85,15 @@
                 </label>
               </div>
 
-        </div>
+            </div>
 
-        <div class="footer">
-          <button id="generate" class="btn btn-primary btn-block">Generate Password</button>
+          <div class="footer">
+            <button id="generate" class="btn btn-primary btn-block">Generate Password</button>
+          </div>
+
         </div>
 
       </div>
-
-    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
