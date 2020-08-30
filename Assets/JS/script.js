@@ -79,7 +79,7 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword);
 
 // Disable Generate Password button if no options checked
-document.querySelectorAll('.options input').forEach(item => {
+document.querySelectorAll('.collection input').forEach(item => {
   item.addEventListener('click', event => {
     if (lowerCharactersCheck.checked || upperCharactersCheck.checked || numericCharactersCheck.checked || specialCharactersCheck.checked) {
       generateBtn.disabled = false;
