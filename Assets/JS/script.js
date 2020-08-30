@@ -33,6 +33,28 @@ range.querySelector("input").addEventListener("input", event => {
   lengthOutput.setAttribute("data-length", event.target.value);
 });
 
+// Creating the pool of eligible characters from the checkbox conditions
+function passwordConfiguration () {
+  let passwordConfigArray = [];
+    if(lowerCharactersCheck.checked){
+      passwordConfigArray.push.apply(passwordConfigArray, lowerCharactersArray);
+      //console.log(passwordConfigArray);
+    }
+    if(upperCharactersCheck.checked){
+      passwordConfigArray.push.apply(passwordConfigArray, upperCharactersArray);
+      //console.log(passwordConfigArray);
+    }
+    if(numericCharactersCheck.checked){
+     passwordConfigArray.push.apply(passwordConfigArray, numericCharactersArray);
+     //console.log(passwordConfigArray);
+    }
+    if(specialCharactersCheck.checked){
+      passwordConfigArray.push.apply(passwordConfigArray, specialCharactersArray);
+      //console.log(passwordConfigArray);
+    }
+    return passwordConfigArray;
+  };
+
 // Generating the password based on checkbox conditions
 function generatePassword() {
   let passwordConfigArray = passwordConfiguration ();
@@ -40,25 +62,9 @@ function generatePassword() {
   for (let i = 0; i < lengthOutput.getAttribute("data-length"); i++) {
     ranVar = ranVar + passwordConfigArray[Math.floor(Math.random() * passwordConfigArray.length)]
   }
+  //console.log(ranVar);
+  return ranVar;
 }
-
-// Creating the pool of eligible characters from the checkbox conditions
-function passwordConfiguration () {
-  let passwordConfigArray = [];
-    if(lowerCharactersCheck.checked){
-      passwordConfigArray.push.apply(passwordConfigArray, lowerCharactersArray);
-    }
-    if(upperCharactersCheck.checked){
-      passwordConfigArray.push.apply(passwordConfigArray, upperCharactersArray);
-    }
-    if(numericCharactersCheck.checked){
-     passwordConfigArray.push.apply(passwordConfigArray, numericCharactersArray);
-    }
-    if(specialCharactersCheck.checked){
-      passwordConfigArray.push.apply(passwordConfigArray, specialCharactersArray);
-    }
-  return passwordConfigArray;
-  };
 
 // Write password to the #password input
 function writePassword() {
