@@ -5,8 +5,8 @@ body {
   background-size: cover;
 }
 
-.range-slider:hover {
-  opacity: 1;
+.lengthValue::after {
+  content: attr(data-length);
 }
 
 #main-container {

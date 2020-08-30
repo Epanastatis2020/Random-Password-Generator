@@ -26,8 +26,8 @@ const numericCharactersCheck = document.querySelector('#numericCharacters');
 const specialCharactersCheck = document.querySelector('#specialCharacters');
 
 //Create variables and event to track password length slider
-const range = document.getElementById("passwordLength");
-const lengthOutput = document.getElementById("lengthValue");
+const range = document.querySelector(".passwordLength");
+const lengthOutput = document.querySelector(".lengthValue");
 
 range.querySelector("input").addEventListener("input", event => {
   lengthOutput.setAttribute("data-length", event.target.value);
@@ -46,16 +46,16 @@ function generatePassword() {
 function passwordConfiguration () {
   let passwordConfigArray = [];
     if(lowerCharactersCheck.checked){
-        passwordConfigArray.push.apply(passwordConfigArray, lowerCharactersArray);
-      }
+      passwordConfigArray.push.apply(passwordConfigArray, lowerCharactersArray);
+    }
     if(upperCharactersCheck.checked){
       passwordConfigArray.push.apply(passwordConfigArray, upperCharactersArray);
     }
     if(numericCharactersCheck.checked){
-    passwordConfigArray.push.apply(passwordConfigArray, numericCharactersArray);
+     passwordConfigArray.push.apply(passwordConfigArray, numericCharactersArray);
     }
     if(specialCharactersCheck.checked){
-    passwordConfigArray.push.apply(passwordConfigArray, specialCharactersArray);
+      passwordConfigArray.push.apply(passwordConfigArray, specialCharactersArray);
     }
   return passwordConfigArray;
   };
