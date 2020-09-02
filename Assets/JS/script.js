@@ -38,19 +38,15 @@ function passwordConfiguration () {
   let passwordConfigArray = [];
     if(lowerCharactersCheck.checked){
       passwordConfigArray.push.apply(passwordConfigArray, lowerCharactersArray);
-      //console.log(passwordConfigArray);
     }
     if(upperCharactersCheck.checked){
       passwordConfigArray.push.apply(passwordConfigArray, upperCharactersArray);
-      //console.log(passwordConfigArray);
     }
     if(numericCharactersCheck.checked){
      passwordConfigArray.push.apply(passwordConfigArray, numericCharactersArray);
-     //console.log(passwordConfigArray);
     }
     if(specialCharactersCheck.checked){
       passwordConfigArray.push.apply(passwordConfigArray, specialCharactersArray);
-      //console.log(passwordConfigArray);
     }
     return passwordConfigArray;
   };
@@ -62,9 +58,52 @@ function generatePassword() {
   for (let i = 0; i < lengthOutput.getAttribute("data-length"); i++) {
     ranVar = ranVar + passwordConfigArray[Math.floor(Math.random() * passwordConfigArray.length)]
   }
-  //console.log(ranVar);
-  return ranVar;
+  if (passwordValid(ranVar)) {
+    return ranVar;
+  } else {
+    return generatePassword();
+  }
 }
+
+// Creating functions to test if password meets criteria
+function passwordValid(ranVar) {
+  if (testNumeral(ranVar) && testSpecial(ranVar) && testUpper(ranVar) && testLower(ranVar)) {
+  return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function testNumeral(ranVar) {
+  if (!numericCharactersCheck.checked) {
+    return true;
+  }
+  return ranVar.match(/[0-9]/);
+}
+
+function testSpecial(ranVar) {
+  if (!specialCharactersCheck.checked) {
+    return true;
+  }
+  const specialResult = ranVar.match(/([^A-Z^a-z^0-9])/);
+  return specialResult;
+}
+
+function testUpper(ranVar) {
+  if (!upperCharactersCheck.checked) {
+    return true;
+  }
+  return ranVar.match(/[A-Z]/);
+}
+
+function testLower(ranVar) {
+  if (!lowerCharactersCheck.checked) {
+    return true;
+  }
+  return ranVar.match(/[a-z]/);
+}
+
 
 // Write password to the #password input
 function writePassword() {
